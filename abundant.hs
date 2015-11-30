@@ -1,4 +1,6 @@
 import Data.List
+import qualified Data.Map as Map
+import qualified Data.List as List
 
 factors :: Int -> [Int]
 factors n = foldl (\arr x->
@@ -12,3 +14,11 @@ properFactors n = filter (\x->x/=n) $ factors n
 
 isAbundant :: Int -> Bool
 isAbundant n = (sum $ properFactors n) > n
+
+
+sumSelf :: [Int] -> Map.Map Int Int -> Map.Map Int Int
+sumSelf [] sums = sums
+sumSelf (x:ns) sums = List.foldl' (\m n ->if Map.member (x+n) m then m else Map.insert (x+n) (x+n) m) (sumSelf ns sums) (x:ns)
+
+sumSelfList :: [Int] -> [Int]
+sumSelfList ns = Map.keys $ sumSelf ns Map.empty
