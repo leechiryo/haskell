@@ -15,10 +15,18 @@ properFactors n = filter (\x->x/=n) $ factors n
 isAbundant :: Int -> Bool
 isAbundant n = (sum $ properFactors n) > n
 
-
 sumSelf :: [Int] -> Map.Map Int Int -> Map.Map Int Int
 sumSelf [] sums = sums
 sumSelf (x:ns) sums = List.foldl' (\m n ->if Map.member (x+n) m then m else Map.insert (x+n) (x+n) m) (sumSelf ns sums) (x:ns)
 
-sumSelfList :: [Int] -> [Int]
-sumSelfList ns = Map.keys $ sumSelf ns Map.empty
+abundants :: [Int]
+abundants = filter isAbundant [1..28123]
+
+sumOf2Abundants :: Map.Map Int Int
+sumOf2Abundants = sumSelf abundants Map.empty
+
+numsCannotExpressedBy2AbundantsSum :: [Int]
+numsCannotExpressedBy2AbundantsSum = filter (\x -> not $ Map.member x sumOf2Abundants) [1..28123]
+
+answer :: Int
+answer = sum numsCannotExpressedBy2AbundantsSum
