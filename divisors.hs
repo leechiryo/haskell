@@ -10,3 +10,9 @@ amicable :: Integer -> Bool
 amicable n = let c = (sum $ divisors n) - n
                  s = (sum $ divisors c) - c
              in if n == s && c /= n then True else False
+
+isPrime :: Integer -> Bool
+isPrime n = (length $ divisors n) == 2
+
+quadratics :: Integer -> Integer -> Integer -> Integer 
+quadratics a b x = x^2 + a*x + b
