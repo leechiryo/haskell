@@ -16,5 +16,7 @@
 -- 2 pound [0..1]
 
 coinsum :: [Int] -> Int -> Int
+coinsum _ 0 = 1
 coinsum [p] t = if t `mod` p == 0 then 1 else 0
-coinsum (p:ps) t = foldl (\a x -> a + coinsum ps (t - p * x)) (t `div` p) [0 .. (t `div` p)]
+coinsum [2,1] t = 1 + (t `div` 2)
+coinsum (p:ps) t = foldl (\a x -> a + coinsum ps (t - p * x)) 0 [0 .. (t `div` p)]
