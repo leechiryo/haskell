@@ -1,11 +1,20 @@
 -- problem 44
--- Pn = (3 * n^2 - n) / 2
--- Pm = (3 * m^2 - m) / 2
--- Pn + Pm = [3 * (n^2 + m^2) - (m + n)] / 2
--- Pn - Pm = [3 * (n^2 - m^2) - (m - n)] / 2
---
--- 4^2 + 7^2 = 16 + 49 = 65
--- 4 + 7 = 11
--- 3 * 65 - 11 = 195 - 11 = 184
--- 8^2 = 64
--- 3 * 64 - 8 = 192 - 8 = 184
+import qualified Data.Map as Map
+
+pantagon :: Int -> Int
+pantagon n = n * (3*n -1) `div` 2
+
+pantagons :: Int -> [Int]
+pantagons max = map pantagon [1..max]
+
+pantagonMap :: Map.Map Int Int
+pantagonMap = Map.fromList $ zip (pantagons 10000) [1..10000]
+
+findAnswer :: [(Int, Int)]
+findAnswer = foldl (\a x -> let b = map (\s -> (s, x)) [1..x]
+                                c = filter (\(l, r) -> Map.member ((pantagon l)+(pantagon r)) pantagonMap && Map.member ((pantagon r) - (pantagon l)) pantagonMap) b
+                            in c ++ a
+                   ) [] [1..10000]
+
+-- It will take some time to get the answer which is [(1020,2167)]
+-- so, pantagon 2167 - pantagon 1020 = 5482660
