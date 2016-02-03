@@ -1,13 +1,12 @@
-fibonacci :: Int -> Integer
-fibonacci 1 = 1
-fibonacci 2 = 1
-fibonacci n = (fibonacci (n-1)) + (fibonacci (n-2))
+fibnacci :: [Integer]
 
-fastFib :: Int -> Integer
-fastFib 1 = 1
-fastFib 2 = 1
-fastFib n = snd $ foldl (\a _-> (snd a, (fst a) + (snd a))) (1, 1) [3..n]
+fibnacci = map fib [0..]
+
+fib :: Int -> Integer
+fib 0 = 1
+fib 1 = 1
+fib n = fibnacci!!(n-1) + fibnacci!!(n-2)
 
 -- get the index whose fibonacci numbers has 1000 digits.
--- head $ filter (\x -> (length $ show $ fastFib x) >=1000) [1..]
+-- head $ filter (\x -> (length $ show $ fib x) >=1000) [1..]
 -- outputs : 4782
